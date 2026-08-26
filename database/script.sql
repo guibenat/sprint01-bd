@@ -1,6 +1,6 @@
-CREATE DATABASE projeto_pi;
+CREATE DATABASE render_trace;
 
-USE projeto_pi;
+USE render_trace;
 
  /* padrões: 
 	snake_case 
