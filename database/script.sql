@@ -21,29 +21,28 @@ CREATE TABLE usuario(
 
 CREATE TABLE empresa (
 	id INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(45) NOT NULL,
+    razao_social VARCHAR(45) NOT NULL,
     cnpj CHAR(14) NOT NULL UNIQUE,
-    logradouro VARCHAR(40) NOT NULL,
-    cidade VARCHAR(45) NOT NULL,
-    estado CHAR(2) NOT NULL,
-    cep CHAR(8),
 	dt_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
     status TINYINT DEFAULT 1 -- por default ativo
 );
 
 CREATE TABLE unidade (
 	id INT PRIMARY KEY AUTO_INCREMENT,
-    empresa_id INT NOT NULL, -- referencia logica para qual empresa pertencer
+    empresa_id INT NOT NULL, 
     nome VARCHAR(60) NOT NULL,
-    logradouro VARCHAR(100) NOT NULL,
+    logradouro VARCHAR(60) NOT NULL,
+    bairro VARCHAR(45) NOT NULL,
     cidade VARCHAR(45) NOT NULL,
-    estados CHAR(2) NOT NULL,
+    estado CHAR(2) NOT NULL,
     cep CHAR(8)
 );
 
 CREATE TABLE sensor (
 	id INT PRIMARY KEY AUTO_INCREMENT,
-    tolva_id INT NULL,
+    codigo VARCHAR(45) NOT NULL, -- identificador do sensor dentro da fábrica/unidade
+    tolva_id INT NULL, 
+    dt_instalacao DATETIME,
 	status TINYINT DEFAULT 1 -- por default ativo
 );
 
@@ -62,54 +61,7 @@ CREATE TABLE tolva (
     unidade_id INT NOT NULL,
     altura DECIMAL (5,2) NOT NULL,
     capacidade DECIMAL (10,2) NOT NULL,
-    residuo VARCHAR(45) NOT NULL
+    residuo VARCHAR(45) NOT NULL,
+    residuo_entrada DATETIME,
+    residuo_saida DATETIME
 );
-
--- INSERÇÃO DE DADOS
-INSERT INTO usuario (nome, email, senha, dt_cadastro, role) VALUES 
-('Brian', 'brian@gmail.com', 'senha123', NOW(), 'ADMIN'),
-('Fernando Brandão', 'fernando@gmail.com', 'senha123', NOW(), 'USUARIO'),
-('Julia Araripe', 'julia@gmail.com', 'senha123', NOW(), 'GESTOR');
-
-INSERT INTO empresa (nome, cnpj, logradouro, cidade, estado, cep, dt_cadastro) VALUES 
-('Grupo Braido', '1234567891234', 'Rua lala', 'São Caetano do Sul', 'SP', '00000000', NOW());
-
--- LISTAR TODOS OS USUARIOS
-SELECT * FROM usuario;
-
--- LISTAR USUÁRIOS ATIVOS E INATIVOS
-SELECT id, nome,
-CASE
-	WHEN status = 1 THEN 'Ativo'
-	WHEN status = 0 THEN 'Inativo'
-    END as 'Status do usuário'
-FROM usuario;
-
--- LISTAR TODAS AS EMPRESAS
-SELECT * from empresa;
-
--- Listar empresas ativas e inativas
-SELECT id, 
-nome,
-CASE
-	WHEN status = 1 THEN 'Ativo'
-    WHEN status = 0 THEN 'Inativo'
-END as 'Status empresa'
-FROM empresa;
-
--- Exibir tempo da empresa cadastrada
-SELECT id, nome,
-TIMESTAMPDIFF(DAY, dt_cadastro, NOW()) as tempo_cadastrado
-from empresa;
-
-
--- MONITORAMENTO DAS TOLVAS
--- Contar a quantidade de tolvas não nulls.
-SELECT COUNT(id) FROM tolva;
-
--- Capacidade tolva
-SELECT id, capacidade FROM tolva;
-
--- Exibir o id e codigo do sensor do qual alerta é TRUE
-SELECT id, codigo from sensor
-WHERE alerta = 1;
