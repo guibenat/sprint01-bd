@@ -38,6 +38,16 @@ CREATE TABLE unidade (
     cep CHAR(8)
 );
 
+CREATE TABLE tolva (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    unidade_id INT NOT NULL,
+    altura DECIMAL (5,2) NOT NULL,
+    capacidade DECIMAL (10,2) NOT NULL,
+    residuo VARCHAR(45) NOT NULL,
+    residuo_entrada DATETIME,
+    residuo_saida DATETIME
+);
+
 CREATE TABLE sensor (
 	id INT PRIMARY KEY AUTO_INCREMENT,
     codigo VARCHAR(45) NOT NULL, -- identificador do sensor dentro da fábrica/unidade
@@ -54,14 +64,4 @@ CREATE TABLE leitura_sensor (
     estado VARCHAR (10) NOT NULL
     CONSTRAINT chEstado CHECK (estado IN('baixo', 'médio', 'alto', 'critico')),
     dt_leitura DATETIME DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE tolva (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-    unidade_id INT NOT NULL,
-    altura DECIMAL (5,2) NOT NULL,
-    capacidade DECIMAL (10,2) NOT NULL,
-    residuo VARCHAR(45) NOT NULL,
-    residuo_entrada DATETIME,
-    residuo_saida DATETIME
 );
