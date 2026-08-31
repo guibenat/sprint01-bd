@@ -1,76 +1,24 @@
-# Render Trace - Banco de dados (Sprint 1)
+# Render Trace - Banco de dados 
 
-- Esse documento descreve o banco de dados estruturado dessa aplicação. Scripts de modelagem (DDL), inserção de dados (DML) e consulta de dados do banco relacional para o sistema de moniroramento no processo de reciclagem animal.
+## 1. Sobre o projeto
+- O Render Trace é uma empresa de monitoramento de resíduos no processo de reciclagema animal, a proposta visa estabelecer padrões de operação, fornecer dados históricos para a tomada de decisões preventivas e garantir um monitoramento contínuo focado na redução direta dos custos operacionais e perda de matéria-prima.
 
+## 2. Tecnologias
+- MySQL Server
+- MySQL Workbench
+- SQL
 
+## 3. Estrutura do banco
+`usuário -> a tabela usuário é responsável pelo cadastro e informações sobre o usuário cliente.`
+`empresa -> cadastro e informações sobre a empresa`
+`unidade -> cadastro e informações sobre a empresa`
+`tolva -> cadastro e informações sobre a empresa`
+`sensor -> cadastro e informações sobre a empresa`
+`leitura_sensor -> cadastro e informações sobre a empresa`
+`armazenamento -> cadastro e informações sobre a empresa`
 
-### 1. Tabela `usuario`
+## 4. Monitoramento
+- O banco consegue armazenar sobre o sensor a distância média, nivel percentual, estado e registra a data/hora. Sendo assim, um monitoramento 24hrs sobre o processo operacional, fornecendo tomada de decisão e análise de dados.
 
-| Coluna       | Metadado         | Descrição                                     |
-|:-------------|:-----------------|:----------------------------------------------|
-| `id`         | PK (Primary Key) | Identificação do Usuário                      |
-| `nome`       | NOT NULL         | Nome do Usuário                               |
-| `email`      | UNIQUE           | Email do Usuário                              |
-| `senha`      | NOT NULL         | Credencial do usuário                         |
-| `dt_cadastro`| CURRENT_TIMESTAMP| Data registro do usuário                      |
-| `status`     | DEFAULT 1        | Status (ativo, inativo)                       |
-| `role`       | CHECK            | Permissão de usuário (admin, usuario, gestor) |
-
-### 2. Tabela `empresa`
-
-| Coluna        | Metadado         | Descrição                                     |
-|:--------------|:-----------------|:----------------------------------------------|
-| `id`          | PK (Primary Key) | Identificação do Usuário                      |
-| `razao_social`| NOT NULL         | Nome da empresa                               |
-| `cnpj`        | UNIQUE           | CNPJ da empresa                               |
-| `dt_cadastro` | CURRENT_TIMESTAMP| Data registro do usuário                      |
-| `status`      | DEFAULT 1        | Status (ativo, inativo)                       |
-
-### 3. Tabela `unidade`
-
-| Coluna        | Metadado         | Descrição                                       |
-|:--------------|:-----------------|:------------------------------------------------|
-| `id`          | PK (Primary Key) | Identificação do Usuário                        |
-| `empresa_id`  | FK               | Identificação da empresa do qual a und. pertence|
-| `nome`        | NOT NULL         | Nome da unidade                                 |
-| `logradouro`  | NOT NULL         | Rua/Logradouro da unidade                       |
-| `bairro`      | NOT NULL         | Bairro da unidade                               |
-| `cidade`      | NOT NULL         | Cidade da unidade                               |
-| `estado`      | NOT NULL         | Estado da unidade                               |
-| `cep`         | NOT NULL         | CEP da unidade                                  |
-| `dt_cadastro` | CURRENT_TIMESTAMP| Data registro do usuário                        |
-| `status`      | DEFAULT 1        | Status (ativo, inativo)                         |
-
-### 4. Tabela `tolva`
-
-| Coluna           |   Metadado         | Descrição                                       |
-|:-----------------|:-----------------|:--------------------------------------------------|
-| `id`             | PK (Primary Key) | Identificação do Usuário                          |
-| `unidade_id`     | FK               | Identificação da empresa do qual a tolva. pertence|
-| `altura`         | NOT NULL         | Altura da tolva                                   |
-| `capacidade`     | NOT NULL         | Capacidade máxima da tolva                        |
-| `residuo`        | NOT NULL         | Resíduo aceitável da tolva                        |
-| `residuo_entrada`| NOT NULL         | Data e Hora da entrada do resíduo                 |
-| `residuo_saida`  | NOT NULL         | Data e Hora da saída do resíduo                   |
-| `status`         | DEFAULT 1        | Status (ativo, inativo)                           |
-
-### 5. Tabela `sensor`
-
-| Coluna         | Metadado         | Descrição                                       |
-|:---------------|:-----------------|:------------------------------------------------|
-| `id`           | PK (Primary Key) | Identificação do Usuário                        |
-| `codigo`       | NOT NULL         | Código de identificação física do sensor        |
-| `tolva_id`     | FK               | Identificação da tolva do qual o sensor pertence|
-| `dt_instalacao`| CURRENT_TIMESTAMP| Data registro da instalação do sensor           |
-| `status`       | DEFAULT 1        | Status (ativo, inativo)                         |
-
-### 6. Tabela `leitura_sensor`
-
-| Coluna            | Metadado         | Descrição                                               |
-|:------------------|:-----------------|:--------------------------------------------------------|
-| `id`              | PK (Primary Key) | Identificação do Usuário                                |
-| `sensor_id`       | NOT NULL         | Identificação do sensor do qual o registro pertence     |
-| `distancia`       | NOT NULL         | Medida presente na leitura do sensor                    |
-| `nivel_percentual`| NULL             | Baseado na medida e capacidade da tolva calcular o nivel|
-| `estado`          | CHECK            | Status (baixo, medio, alto, critico)                    |
-| `dt_leitura`      | CURRENT_TIMESTAMP| Data registro da leitura                                |
+## 5. Histórico de armazenamento
+...
