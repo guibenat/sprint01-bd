@@ -1,22 +1,16 @@
 CREATE DATABASE render_trace;
 
 USE render_trace;
-
- /* padrões: 
-	snake_case 
-	tinyint - para boolean 
-    cep e cnpj não armazenarão . e -
- */
  
 CREATE TABLE usuario(
 	id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(45) NOT NULL,
     email VARCHAR(60) UNIQUE NOT NULL,
-    senha VARCHAR(12) NOT NULL,
+    senha VARCHAR(20) NOT NULL,
     dt_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
     status TINYINT DEFAULT 1, -- por default ativo
-    role VARCHAR(10),
-    CONSTRAINT chRole CHECK (role IN('ADMIN', 'USUARIO', 'GESTOR'))
+    tipo VARCHAR(10),
+    CONSTRAINT chTipo CHECK (tipo IN('ADMIN', 'GESTOR'))
 );
 
 CREATE TABLE empresa (
@@ -30,22 +24,12 @@ CREATE TABLE empresa (
 CREATE TABLE unidade (
 	id INT PRIMARY KEY AUTO_INCREMENT,
     empresa_id INT NOT NULL, 
-    nome VARCHAR(60) NOT NULL,
+    nome_fantasia VARCHAR(60) NOT NULL,
     logradouro VARCHAR(60) NOT NULL,
     bairro VARCHAR(45) NOT NULL,
     cidade VARCHAR(45) NOT NULL,
     estado CHAR(2) NOT NULL,
     cep CHAR(8)
-);
-
-CREATE TABLE tolva (
-	id INT PRIMARY KEY AUTO_INCREMENT,
-    unidade_id INT NOT NULL,
-    altura DECIMAL (5,2) NOT NULL,
-    capacidade DECIMAL (10,2) NOT NULL,
-    residuo VARCHAR(45) NOT NULL,
-    residuo_entrada DATETIME,
-    residuo_saida DATETIME
 );
 
 CREATE TABLE sensor (
@@ -61,7 +45,23 @@ CREATE TABLE leitura_sensor (
     sensor_id INT NOT NULL,
     distancia DECIMAL (5,2) NOT NULL, -- em centimetros
     nivel_percentual DECIMAL(5,2) NOT NULL,
-    estado VARCHAR (10) NOT NULL
+    estado VARCHAR (10) NOT NULL,
     CONSTRAINT chEstado CHECK (estado IN('baixo', 'médio', 'alto', 'critico')),
     dt_leitura DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE tolva (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    unidade_id INT NOT NULL,
+    altura DECIMAL (5,2) NOT NULL,
+    capacidade DECIMAL (10,2) NOT NULL,
+    residuo VARCHAR(45) NOT NULL,
+    status TINYINT DEFAULT 1 -- por default ativo
+);
+
+CREATE TABLE armazenamento (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    tolva_id INT NOT NULL,
+    dt_entrada DATETIME NOT NULL,
+    dt_saida DATETIME NULL
 );
