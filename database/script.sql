@@ -46,7 +46,7 @@ CREATE TABLE leitura_sensor (
     distancia DECIMAL (5,2) NOT NULL, -- em centimetros
     nivel_percentual DECIMAL(5,2) NOT NULL,
     estado VARCHAR (10) NOT NULL,
-    CONSTRAINT chEstado CHECK (estado IN('baixo', 'médio', 'alto', 'critico')),
+    CONSTRAINT chEstado CHECK (estado IN('baixo', 'medio', 'alto', 'critico')),
     dt_leitura DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 

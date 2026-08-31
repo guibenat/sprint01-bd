@@ -11,3 +11,5 @@ SELECT * FROM tolva;
 SELECT * FROM sensor;
 
 SELECT * FROM leitura_sensor;
+
+SELECT * FROM armazenamento;
