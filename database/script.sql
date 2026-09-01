@@ -1,22 +1,16 @@
-CREATE DATABASE projeto_pi;
+CREATE DATABASE render_trace;
 
-USE projeto_pi;
-
- /* padrões: 
-	snake_case 
-	tinyint - para boolean 
-    cep e cnpj não armazenarão . e -
- */
+USE render_trace;
  
 CREATE TABLE usuario(
 	id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(45) NOT NULL,
     email VARCHAR(60) UNIQUE NOT NULL,
-    senha VARCHAR(12) NOT NULL,
+    senha VARCHAR(20) NOT NULL,
     dt_cadastro DATETIME DEFAULT CURRENT_TIMESTAMP,
     status TINYINT DEFAULT 1, -- por default ativo
-    role VARCHAR(10),
-    CONSTRAINT chRole CHECK (role IN('ADMIN', 'USUARIO', 'GESTOR'))
+    tipo VARCHAR(10),
+    CONSTRAINT chTipo CHECK (tipo IN('ADMIN', 'GESTOR'))
 );
 
 CREATE TABLE empresa (
@@ -30,7 +24,7 @@ CREATE TABLE empresa (
 CREATE TABLE unidade (
 	id INT PRIMARY KEY AUTO_INCREMENT,
     empresa_id INT NOT NULL, 
-    nome VARCHAR(60) NOT NULL,
+    nome_fantasia VARCHAR(60) NOT NULL,
     logradouro VARCHAR(60) NOT NULL,
     bairro VARCHAR(45) NOT NULL,
     cidade VARCHAR(45) NOT NULL,
@@ -51,8 +45,8 @@ CREATE TABLE leitura_sensor (
     sensor_id INT NOT NULL,
     distancia DECIMAL (5,2) NOT NULL, -- em centimetros
     nivel_percentual DECIMAL(5,2) NOT NULL,
-    estado VARCHAR (10) NOT NULL
-    CONSTRAINT chEstado CHECK (estado IN('baixo', 'médio', 'alto', 'critico')),
+    estado VARCHAR (10) NOT NULL,
+    CONSTRAINT chEstado CHECK (estado IN('baixo', 'medio', 'alto', 'critico')),
     dt_leitura DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -62,6 +56,12 @@ CREATE TABLE tolva (
     altura DECIMAL (5,2) NOT NULL,
     capacidade DECIMAL (10,2) NOT NULL,
     residuo VARCHAR(45) NOT NULL,
-    residuo_entrada DATETIME,
-    residuo_saida DATETIME
+    status TINYINT DEFAULT 1 -- por default ativo
+);
+
+CREATE TABLE armazenamento (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    tolva_id INT NOT NULL,
+    dt_entrada DATETIME NOT NULL,
+    dt_saida DATETIME NULL
 );
