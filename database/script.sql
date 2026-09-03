@@ -1,5 +1,4 @@
 CREATE DATABASE render_trace;
-
 USE render_trace;
  
 CREATE TABLE usuario(
@@ -35,7 +34,7 @@ CREATE TABLE unidade (
 CREATE TABLE sensor (
 	id INT PRIMARY KEY AUTO_INCREMENT,
     codigo VARCHAR(45) NOT NULL, -- identificador do sensor dentro da fábrica/unidade
-    tolva_id INT NULL, 
+    tanque_id INT NULL, 
     dt_instalacao DATETIME,
 	status TINYINT DEFAULT 1 -- por default ativo
 );
@@ -50,7 +49,7 @@ CREATE TABLE leitura_sensor (
     dt_leitura DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE tolva (
+CREATE TABLE tanque (
 	id INT PRIMARY KEY AUTO_INCREMENT,
     unidade_id INT NOT NULL,
     altura DECIMAL (5,2) NOT NULL,
@@ -59,9 +58,9 @@ CREATE TABLE tolva (
     status TINYINT DEFAULT 1 -- por default ativo
 );
 
-CREATE TABLE armazenamento (
+CREATE TABLE periodo_armazenamento (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    tolva_id INT NOT NULL,
+    tanque_id INT NOT NULL,
     dt_entrada DATETIME NOT NULL,
     dt_saida DATETIME NULL
 );
