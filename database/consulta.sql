@@ -1,12 +1,24 @@
 USE render_trace;
 
--- Exibir a quantidade de usuários cadastrados ativos no sistema
-SELECT COUNT(*) AS qtd_usuarios_ativo
-FROM usuario
-WHERE status = 1;
+-- USUARIOS 
+-- Exibir as informações dos usuários
+SELECT id,
+nome,
+email,
+dt_cadastro,
+tipo,
+CASE
+	WHEN status = 1 THEN 'Ativo'
+    WHEN status = 0 THEN 'Inativo'
+END AS status
+FROM usuario;
 
 -- Exibir as informações de um usuário específico
-SELECT nome, email, dt_cadastro, tipo,
+SELECT id,
+nome,
+email,
+dt_cadastro,
+tipo,
 CASE
 	WHEN status = 1 THEN 'Ativo'
     WHEN status = 0 THEN 'Inativo'
@@ -14,13 +26,7 @@ END AS status
 FROM usuario
 WHERE id = 1;
 
-
 -- EMPRESAS 
--- Exibir a quantidade de empresas ativas cadastradas no sistema
-SELECT COUNT(*) AS qtd_empresas_ativa
-FROM empresa
-WHERE status = 1;
-
 -- Exibir as infos das empresas ativas e inativas
 SELECT id,
 razao_social,
@@ -29,7 +35,7 @@ dt_cadastro,
 CASE
 	WHEN status = 1 THEN 'Ativo'
     WHEN status = 2 THEN 'Inativo'
-    END AS status
+END AS status
 FROM empresa;
 
 -- UNIDADES
@@ -40,16 +46,26 @@ SELECT * FROM unidade;
 SELECT * FROM unidade
 WHERE empresa_id = 1;
 
+-- Exibir dias, meses, anos da empresa cadastrado
+SELECT id,
+razao_social,
+cnpj,
+dt_cadastro,
+ CASE
+	WHEN status = 1 THEN 'Ativo'
+    WHEN status = 0 THEN 'Inativo'
+END AS status,
+TIMESTAMPDIFF(DAY, dt_cadastro, NOW()) as dias_cadastrado,
+TIMESTAMPDIFF(MONTH, dt_cadastro, NOW()) as meses_cadastrado,
+TIMESTAMPDIFF(YEAR, dt_cadastro, NOW()) as anos_cadastrado
+from empresa;
+
 
 -- TANQUE -- 
--- Exibir a quantidade de tanques no sistema
-SELECT COUNT(*) AS quantidade_tanque
-FROM tanque;
-
 -- Exibir a quantidade de tanques de uma unidade especifica
-SELECT COUNT(*) AS quantidade_tanque
+SELECT * 
 FROM tanque
-WHERE unidade_id = 1;
+WHERE unidade_id = 2;
 
 -- Exibir a altura e capacidade de cada tanque
 SELECT id, 
@@ -74,7 +90,7 @@ SELECT id,
 CASE	
 	WHEN status = 1 THEN 'Ativo'
 	WHEN status = 0 THEN 'Inativo'
-    END AS disponibilidade
+END AS disponibilidade
 FROM tanque;
 
 -- Exibir localização do tanque
@@ -113,7 +129,7 @@ SELECT id,
 codigo,
 CASE
 	WHEN tanque_id IS NULL THEN 'Sem Monitoramento'
-	end As monitoramento
+	END AS monitoramento
 FROM sensor
 WHERE tanque_id IS NULL;
 
@@ -135,7 +151,7 @@ FROM leitura_sensor
 WHERE estado = 'critico';
 
 -- Exibir quantidade de ocorrencias criticas antes do dia 22-08-2026
-SELECT COUNT(*) AS qtd_ocorrencias_criticas
+SELECT * 
 FROM leitura_sensor
 WHERE estado = 'critico' AND
 dt_leitura < '2026-08-22';
@@ -166,4 +182,13 @@ SELECT * FROM periodo_armazenamento
 WHERE dt_saida IS NULL;
 
 -- Quando começou o periodo armazenamento 
+SELECT id, 
+tanque_id,
+IFNULL(dt_entrada, 'Sem armazenamento') AS relatorio_entrada
+FROM periodo_armazenamento;
+
 -- Quando terminou
+SELECT id,
+tanque_id,
+IFNULL(dt_saida, 'Residuo no tanque. Sem registro de saída') AS relatorio_saida
+FROM periodo_armazenamento;
