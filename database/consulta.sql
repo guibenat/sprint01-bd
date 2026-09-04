@@ -34,14 +34,12 @@ cnpj,
 dt_cadastro,
 CASE
 	WHEN status = 1 THEN 'Ativo'
-    WHEN status = 2 THEN 'Inativo'
+    WHEN status = 0 THEN 'Inativo'
 END AS status
 FROM empresa;
 
 -- UNIDADES
 -- Exibir as unidades cadastradas
-SELECT * FROM unidade;
-
 -- Exibir as unidades de uma empresa especifica
 SELECT * FROM unidade
 WHERE empresa_id = 1;
@@ -99,8 +97,6 @@ unidade_id
 FROM tanque;
 
 -- SENSORES
-SELECT * FROM sensor;
-
 -- Exibir qual sensor está instalado em cada tanque
 SELECT id,
 tanque_id
@@ -124,7 +120,7 @@ TIMESTAMPDIFF(DAY, dt_instalacao, NOW()) AS dias_operando,
 TIMESTAMPDIFF(MONTH, dt_instalacao, NOW()) AS meses_operando
 FROM sensor;
 
--- exibir quais tanques possuem e não possuem sensores
+-- exibir quais sensores não possuem tanques
 SELECT id,
 codigo,
 CASE
@@ -133,11 +129,8 @@ CASE
 FROM sensor
 WHERE tanque_id IS NULL;
 
-
 -- LEITURA -- 
-SELECT * FROM leitura_sensor;
-
--- Exibir informações sobre o sensor 1
+-- Exibir informações de leitura sobre o sensor 1
 SELECT *
 FROM leitura_sensor
 WHERE id = 1;
@@ -150,7 +143,7 @@ dt_leitura
 FROM leitura_sensor
 WHERE estado = 'critico';
 
--- Exibir quantidade de ocorrencias criticas antes do dia 22-08-2026
+-- Exibir ocorrencias criticas antes do dia 22-08-2026
 SELECT * 
 FROM leitura_sensor
 WHERE estado = 'critico' AND
@@ -174,7 +167,7 @@ estado = 'critico';
 
 -- Exibir periodo de entrada de saida dos tanques
 SELECT *,
-IFNULL(dt_saida, 'Sem saída identificada') AS 'Moniramento E/S'
+IFNULL(dt_saida, 'Sem saída identificada') AS 'Monitoramento E/S'
 FROM periodo_armazenamento;
 
 -- Exibir quais periodos estão em andamento
