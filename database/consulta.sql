@@ -39,7 +39,6 @@ END AS status
 FROM empresa;
 
 -- UNIDADES
--- Exibir as unidades cadastradas
 -- Exibir as unidades de uma empresa especifica
 SELECT * FROM unidade
 WHERE empresa_id = 1;
@@ -133,7 +132,7 @@ WHERE tanque_id IS NULL;
 -- Exibir informações de leitura sobre o sensor 1
 SELECT *
 FROM leitura_sensor
-WHERE id = 1;
+WHERE sensor_id = 1;
 
 -- Exibir os sensores com leituras criticas e a data de leitura
 SELECT id,
@@ -177,7 +176,7 @@ WHERE dt_saida IS NULL;
 -- Quando começou o periodo armazenamento 
 SELECT id, 
 tanque_id,
-IFNULL(dt_entrada, 'Sem armazenamento') AS relatorio_entrada
+dt_entrada
 FROM periodo_armazenamento;
 
 -- Quando terminou
