@@ -1,9 +1,13 @@
-# Render Trace - Banco de Dados
+# Render Trace 
 
-## 1. Sobre o projeto
+Projeto desenvolvido para a Pesquisa e Inovação da SPTech, com foco em uma solução de IoT aplicada ao processo de reciclagem animal.
 
-O Render Trace é uma solução de monitoramento aplicada ao processo de reciclagem animal, com foco no acompanhamento do nível de material armazenado em tanques de armazenamento.
+O trabalho conta com uma **Calculadora Financeira**, utilizada para demonstrar o impacto das perdas operacionais e o potencial financeiro da solução, e um **Banco de Dados**, desenvolvido para organizar e armazenar as informações utilizadas pelo sistema.
 
-O banco de dados é responsável por armazenar informações sobre empresas, unidades, tanques, sensores, leituras realizadas e períodos de armazenamento, permitindo o acompanhamento operacional e a consulta de dados históricos.
+A proposta busca utilizar tecnologia e dados para auxiliar empresas no **monitoramento dos tanques de armazenamento**, contribuindo para uma tomada de decisão mais eficiente.
 
-A solução busca fornecer informações para identificação de situações críticas, análise do comportamento do nível dos tanques e apoio à tomada de decisões preventivas.
+## Tecnologias
+
+- HTML
+- JavaScript
+- MySQL
